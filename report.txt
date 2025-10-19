@@ -1,0 +1,21 @@
+Diamond Cut Classification Report
+==================================================
+
+Model: Logistic Regression (Multinomial)
+Dataset: 53940 samples
+Features: carat, color, clarity, depth, table, price, x, y, z
+Target: cut (5 classes)
+
+Classification Report:
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+        Fair       0.00      0.00      0.00       322
+        Good       0.00      0.00      0.00       981
+       Ideal       0.57      0.93      0.70      4310
+     Premium       0.51      0.68      0.58      2758
+   Very Good       0.00      0.00      0.00      2417
+
+    accuracy                           0.54     10788
+   macro avg       0.21      0.32      0.26     10788
+weighted avg       0.36      0.54      0.43     10788
