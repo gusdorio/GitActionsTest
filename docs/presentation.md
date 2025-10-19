@@ -1,5 +1,6 @@
 # Introdução à Automação com GitHub Actions
 
+
 ## O que é CI/CD?
 
 ### Integração Contínua (CI)

@@ -7,6 +7,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build-slides:
     runs-on: ubuntu-latest
