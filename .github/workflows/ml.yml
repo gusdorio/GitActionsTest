@@ -1,34 +1,35 @@
-name: ML Pipeline
+name: Train ML Model
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
 
 jobs:
-  train-model:
+  train:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Configurar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
 
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: '3.11'
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      - name: Executar treinamento
+      - name: Run training
         run: python train.py
 
-      - name: Upload do relatório
-        uses: actions/upload-artifact@v4
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: classification-report
-          path: report.txt
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          keep_files: true

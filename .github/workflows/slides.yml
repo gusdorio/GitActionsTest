@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "docs/*.md"
+      - "docs/index.html"
     branches:
       - main
 
@@ -18,13 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar Pandoc e LaTeX
-        run: sudo apt-get update && sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-latex-extra
+      - name: Installs Pandoc and minimal LaTeX
+        run: sudo apt-get update && sudo apt-get install -y pandoc texlive-latex-base texlive-latex-extra
 
       - name: Converter Markdown em PDF
         run: |
           if [ -f "docs/presentation.md" ]; then
-            pandoc docs/presentation.md -o slides.pdf --slide-level=2 --pdf-engine=xelatex
+            pandoc docs/presentation.md -o slides.pdf --slide-level=2 --pdf-engine=pdflatex
           else
             echo "Warning: docs/presentation.md not found, creating a sample"
             mkdir -p docs
@@ -32,12 +33,18 @@ jobs:
             echo "" >> docs/presentation.md
             echo "## Slide 1" >> docs/presentation.md
             echo "This is a sample slide" >> docs/presentation.md
-            pandoc docs/presentation.md -o slides.pdf --slide-level=2 --pdf-engine=xelatex
+            pandoc docs/presentation.md -o slides.pdf --slide-level=2 --pdf-engine=pdflatex
           fi
+
+      - name: Copy files to deployment directory
+        run: |
+          mkdir -p deploy
+          cp slides.pdf deploy/
+          cp docs/index.html deploy/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: deploy
           keep_files: true
