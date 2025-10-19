@@ -1,0 +1,13 @@
+name: Hello World Workflow
+
+on: [push]  # Dispara sempre que um push é realizado
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest  # Runner do GitHub
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Exibir mensagem de boas-vindas
+        run: echo "👋 Hello, GitHub Actions!"
