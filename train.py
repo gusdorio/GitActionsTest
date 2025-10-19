@@ -6,8 +6,8 @@ from sklearn.metrics import classification_report
 # 1. Leitura dos dados
 df = pd.read_csv("data/diamonds.csv")
 
-X = df.drop("target", axis=1)
-y = df["target"]
+X = df.drop("cut", axis=1)
+y = df["cut"]
 
 # 2. Divisão dos dados
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
