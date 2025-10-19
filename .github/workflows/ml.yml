@@ -1,0 +1,26 @@
+name: ML Pipeline
+
+on: [push]
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: Executar treinamento
+        run: python train.py
+
+      - name: Upload do relatório
+        uses: actions/upload-artifact@v4
+        with:
+          name: classification-report
+          path: report.txt
